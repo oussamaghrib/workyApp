@@ -8,7 +8,7 @@ function Exercises() {
     async function fetchExercises() {
         const response = await fetch(`https://api.api-ninjas.com/v1/exercises?offset=${offset}`, {
             headers: {
-                'X-Api-Key': '6C62MMy46I0K6wT+lrPcAA==zahAW57SGWVIGL8t'
+                'X-Api-Key': import.meta.env.VITE_EXERCISES_NINJA_API_KEY
             }
         });
         const data = await response.json();
