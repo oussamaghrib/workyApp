@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-
+import { getExercises } from '../services/exercises';
 function Exercises() {
 
     const [exercises, setExercises] = useState([]);
     const [offset, setOffset] = useState(0);
 
-    async function fetchExercises() {
-        const response = await fetch(`https://api.api-ninjas.com/v1/exercises?offset=${offset}`, {
-            headers: {
-                'X-Api-Key': import.meta.env.VITE_EXERCISES_NINJA_API_KEY
-            }
-        });
-        const data = await response.json();
-        return data
-    }
-
     async function handleLoadMore() {
-        await fetchExercises();
         setOffset(prev => prev + 10);
-        const exercises = await fetchExercises()
+        const exercises = await getExercises(offset)
 
         setExercises(prev => [...prev, ...exercises]); // Update exercises state
     }
