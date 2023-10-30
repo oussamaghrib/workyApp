@@ -6,7 +6,6 @@ function App() {
 
   return (
     <>
-      <p>hi</p>
       <Exercises />
     </>
   )

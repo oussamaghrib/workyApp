@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import ExerciseCard from "./ExerciseCard";
 import { getExercises } from "../services/exercises";
+
+import './exercises.css'
+
 function Exercises() {
   const [exercises, setExercises] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -7,7 +11,6 @@ function Exercises() {
   const buttonRef = useRef()
 
   useEffect(() => {
-
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         handleLoadMore()     }
@@ -33,12 +36,12 @@ function Exercises() {
 
   return (
     <>
+
+    <div className="exercises-group">
       {exercises.map((exercise, i) => (
-        <div key={i}>
-          <h3>{exercise.name}</h3>
-          <p>{exercise.muscles}</p>
-        </div>
+        <ExerciseCard exercise={exercise} key={i}/ >
       ))}
+      </div>
 
       <button onClick={handleLoadMore} ref={buttonRef}>Load More</button>
     </>

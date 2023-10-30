@@ -1,0 +1,27 @@
+.main-card-style {
+    min-width: 275px;
+    margin: 0.7em 2em;
+    flex: 1 0 21%;
+    text-align: center;
+    position:relative;
+}
+
+.tags {
+    text-align: left;
+    position:absolute;
+    bottom:7%;
+    left:45%;
+}
+
+
+.hashtag {
+  font-weight: 700;
+}
+
+.muscle-tag {
+  color: #3b79c8;
+}
+
+.exercise-type-tag {
+    color: #ae6313
+}
