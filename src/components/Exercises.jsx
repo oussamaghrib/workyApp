@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import ExerciseCard from "./ExerciseCard";
 import { getExercises } from "../services/exercises";
+import { Box } from "@mui/material";
 
-import './exercises.css'
+
 
 function Exercises() {
   const [exercises, setExercises] = useState([]);
@@ -37,11 +38,15 @@ function Exercises() {
   return (
     <>
 
-    <div className="exercises-group">
+    <Box sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around'
+    }}>
       {exercises.map((exercise, i) => (
         <ExerciseCard exercise={exercise} key={i}/ >
       ))}
-      </div>
+      </Box>
 
       <button onClick={handleLoadMore} ref={buttonRef}>Load More</button>
     </>

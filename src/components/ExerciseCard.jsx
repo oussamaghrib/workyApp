@@ -8,37 +8,48 @@ import Typography from "@mui/material/Typography";
 
 import ExerciseInstructionsModal from "./ExerciseInstructionsModal";
 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-
-
-import './exercise-card.css'
-
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 function ExerciseCard(props) {
   return (
-    <Card className="main-card-style">
+    <Card
+      sx={{
+        bgcolor: "white",
+        color: "black",
+        width: "30%",
+        minWidth: "400px",
+        mb:"2%"
+      }}
+    >
       <CardContent>
         <Typography variant="h5" sx={{ fontSize: "1.3rem" }} component="div">
           {props.exercise.name}
         </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' , alignItems: 'center', width: '90%',}}>
+          <Box>
+            <Typography variant="body2">
+ 
+              <Typography component="span" m="{1}" color="third.main">
+                #{props.exercise.muscle}
+              </Typography>
+            </Typography>
+            <Typography variant="body2">
+ 
+              <Typography component="span" m="{1}" color="second.main">
+                #{props.exercise.type}
+              </Typography>
+            </Typography>
+          </Box>
 
-        <div className="tags">
-        <Typography variant="body2">
-          main muscle: <span className="hashtag muscle-tag">#{props.exercise.muscle}</span>
-        </Typography>
-        <Typography variant="body2">
-          main muscle: <span className="hashtag exercise-type-tag">#{props.exercise.type}</span>
-        </Typography>
-        </div>
+          <ExerciseInstructionsModal
+            instructions={props.exercise.instructions}
+          />
+        </Box>
       </CardContent>
-      <CardActions>
-        <ExerciseInstructionsModal instructions = {props.exercise.instructions}/>
-      </CardActions>
     </Card>
-
   );
 }
 
