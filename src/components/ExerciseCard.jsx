@@ -17,27 +17,31 @@ function ExerciseCard(props) {
   return (
     <Card
       sx={{
-        bgcolor: "white",
         color: "black",
         width: "30%",
         minWidth: "400px",
-        mb:"2%"
+        mb: "2%",
       }}
     >
       <CardContent>
         <Typography variant="h5" sx={{ fontSize: "1.3rem" }} component="div">
           {props.exercise.name}
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' , alignItems: 'center', width: '90%',}}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "90%",
+          }}
+        >
           <Box>
             <Typography variant="body2">
- 
               <Typography component="span" m="{1}" color="third.main">
                 #{props.exercise.muscle}
               </Typography>
             </Typography>
             <Typography variant="body2">
- 
               <Typography component="span" m="{1}" color="second.main">
                 #{props.exercise.type}
               </Typography>

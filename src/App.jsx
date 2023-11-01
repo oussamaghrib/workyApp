@@ -1,27 +1,34 @@
 import Exercises from "./components/Exercises";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import "./App.css";
+import { Box } from "@mui/material";
+
+
+
 
 const theme = createTheme({
   palette: {
     first: {
-      main: "#E6E6FA",
+      main: "#0e2439",
     },
     second: {
-      main: "#DA70D6",
+      main: "#e6375a",
     },
     third: {
-      main: "#C9A0DC",
+      main: "#f9af1a",
     },
     forth: {
-      main: "#CCCCFF",
+      main: "#49b66d",
     },
     fifth: {
-      main: '#89CFF0',
+      main: '#4799eb',
     },
     sixth: {
-      main: '#277F84',
+      main: '#9270c2',
     },
+    seventh: {
+      main: '#e25a91',
+    },
+    
   },
 });
 
@@ -29,7 +36,10 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <Box>
+      
       <Exercises />
+      </Box>
     </ThemeProvider>
   );
 }
