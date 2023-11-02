@@ -9,11 +9,22 @@ function Exercises() {
   const [exercises, setExercises] = useState([]);
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState([]);
+  
+
+
   let testConst = exercises.length;
   const buttonRef = useRef()
 
   function handleSelect(name) {
-    setSelected(prev => [...prev, name]);
+    
+    if(!selected.includes(name)) {
+      setSelected(prev => [...prev, name]);
+    } 
+    else {
+      setSelected(prev => prev.filter(n => n !== name))
+
+    }
+    
   }
 
 
@@ -50,7 +61,7 @@ function Exercises() {
       justifyContent: 'space-around'
     }}>
       {exercises.map((exercise, i) => (
-        <ExerciseCard exercise={exercise} key={i} onSelect={handleSelect}         />
+        <ExerciseCard exercise={exercise} key={i} onSelect={handleSelect}      />
        
       ))}
       </Box>

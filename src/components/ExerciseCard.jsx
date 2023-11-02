@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import RemoveIcon from '@mui/icons-material/Remove';
 
 import ExerciseInstructionsModal from "./ExerciseInstructionsModal";
 
@@ -16,11 +17,13 @@ import "@fontsource/roboto/700.css";
 
 function ExerciseCard(props) {
 
-  
+  const [wasAdded, setWasAdded] = useState(false)
 
   function handleClick() {
-    const name = props.exercise.name
-    props.onSelect(name);
+    if (!props.wasAdded) {
+      props.onSelect(props.exercise.name);
+      setWasAdded(prev => !prev)
+    }
   }
 
 
@@ -42,8 +45,18 @@ function ExerciseCard(props) {
           top: 16,
           right: 16,
         }}
-      >
-        <LibraryAddIcon onClick={handleClick} />
+      >{
+        wasAdded ? (
+          <RemoveIcon onClick={handleClick} sx={{
+            color:"fifth.main"
+          }}/>  
+        ) : (
+          <LibraryAddIcon onClick={handleClick} sx={{
+            color:"seventh.main"
+          }}/>
+        )
+      }
+        
       </Box>
       <CardContent>
         <Typography variant="h5" sx={{ fontSize: "1.3rem" }} component="div">
