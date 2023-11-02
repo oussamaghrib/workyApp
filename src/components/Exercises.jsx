@@ -10,6 +10,17 @@ function Exercises() {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState([]);
   
+  useEffect(() => {
+    const storedSelected = JSON.parse(localStorage.getItem('selectedExercises'));
+    if (storedSelected && storedSelected.length > 0) {
+      setSelected(storedSelected);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('selectedExercises', JSON.stringify(selected));
+  }, [selected]);
+
 
 
   let testConst = exercises.length;
@@ -22,6 +33,7 @@ function Exercises() {
     } 
     else {
       setSelected(prev => prev.filter(n => n !== name))
+      
 
     }
     
@@ -61,7 +73,7 @@ function Exercises() {
       justifyContent: 'space-around'
     }}>
       {exercises.map((exercise, i) => (
-        <ExerciseCard exercise={exercise} key={i} onSelect={handleSelect}      />
+        <ExerciseCard exercise={exercise} key={i} onSelect={handleSelect}    />
        
       ))}
       </Box>

@@ -19,6 +19,19 @@ function ExerciseCard(props) {
 
   const [wasAdded, setWasAdded] = useState(false)
 
+  useEffect(() => {
+    const storedWasAdded = JSON.parse(localStorage.getItem(props.exercise.name));
+    if (storedWasAdded) {
+      setWasAdded(storedWasAdded);
+    }
+
+      
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(props.exercise.name, JSON.stringify(wasAdded));
+  }, [wasAdded]);
+
   function handleClick() {
     if (!props.wasAdded) {
       props.onSelect(props.exercise.name);
