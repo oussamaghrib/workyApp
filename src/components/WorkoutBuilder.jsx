@@ -56,6 +56,14 @@ function WorkoutBuilder() {
     })),
   ];
 
+  function handleNumberInput(e) {
+    e.preventDefault();
+    const inputValue = e.target.value;
+    const sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+    e.target.value = sanitizedValue;
+  }
+  
+
   function toggleMode(globalIndex) {
     if (globalIndex < baseRows.length) {
       // Index is within baseRows, update it
@@ -99,18 +107,13 @@ function WorkoutBuilder() {
               <TextField
                 label="Reps"
                 type="number"
-                onInput={(e) => {
-                  e.preventDefault();
-                  const inputValue = e.target.value;
-                  const sanitizedValue = inputValue.replace(/[^0-9]/g, '');
-                  e.target.value = sanitizedValue;
-                }}
+                onInput={handleNumberInput}
               
               />
-              <TextField label="Sets" type="number" />
+              <TextField label="Sets" type="number"  onInput={handleNumberInput}/>
             </>
           ) : (
-            <TextField label="Time" type="number" />
+            <TextField label="Time" type="number" onInput={handleNumberInput}/>
           )}
 
           <Button
