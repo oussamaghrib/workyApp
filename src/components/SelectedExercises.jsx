@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -15,6 +16,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  position: "relative"
 };
 
 const SelectedExercises = (props) => {
@@ -29,18 +31,30 @@ const SelectedExercises = (props) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>the selected exercises</Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+       
         <Box sx={style}>
+        
         {props.selectedExercises.map((selectedExercise, index) => {
-            return <Typography id="modal-modal-description" sx={{ mt: 2 }} key={index}> {selectedExercise}</Typography>
+            return (
+              <Box key={index}> 
+                <Typography id="modal-modal-description" sx={{ mt: 2, mb:2 }}> {selectedExercise}</Typography>
+              </Box>
+            )
+            
         })
         }
+        <Button sx= {{
+          position: "absolute",
+          bottom: "5px",
+          right: "10px"
+        }}>go build a workout</Button>
         </Box>
       </Modal>
     </div>
@@ -48,6 +62,9 @@ const SelectedExercises = (props) => {
 }
 
 
+export function getExercises() {
+  return props.selectedExercises
+}
 
    
 export default SelectedExercises

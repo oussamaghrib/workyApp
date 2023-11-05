@@ -1,4 +1,6 @@
 import Exercises from "./components/Exercises";
+
+
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
@@ -37,8 +39,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-      
-      <Exercises />
+ 
+      <Exercises /> 
       </Box>
     </ThemeProvider>
   );

@@ -3,6 +3,8 @@ import ExerciseCard from "./ExerciseCard";
 import { getExercises } from "../services/exercises";
 import { Box } from "@mui/material";
 import SelectedExercises from "./SelectedExercises";
+import { ExercisesContext } from '../contexts/exercisesContext';
+import WorkoutBuilder from "./WorkoutBuilder";
 
 
 function Exercises() {
@@ -23,7 +25,7 @@ function Exercises() {
 
 
 
-  let testConst = exercises.length;
+ 
   const buttonRef = useRef()
 
   function handleSelect(name) {
@@ -49,7 +51,7 @@ function Exercises() {
     observer.observe(buttonRef.current);
 
     return () => observer.disconnect();
-  }, [testConst]);
+  }, [exercises.length]);
 
   async function handleLoadMore() {
     setOffset((prev) => prev + 10);
@@ -59,13 +61,13 @@ function Exercises() {
 
     return exercises.length;
   }
-  const inputRef = useRef();
-  const scrollHandler = () => {
-    console.log(inputRef.current.getBoundingClientRect());
-  };
+
 
   return (
-    <>
+    <> 
+    <ExercisesContext.Provider value={{selected, setSelected}}>
+      
+    <WorkoutBuilder></WorkoutBuilder>
     <SelectedExercises selectedExercises={selected}></SelectedExercises>
     <Box sx={{
       display: 'flex',
@@ -79,6 +81,7 @@ function Exercises() {
       </Box>
 
       <button onClick={handleLoadMore} ref={buttonRef}>Load More</button>
+      </ExercisesContext.Provider>  
     </>
   );
 }
