@@ -61,7 +61,6 @@ function useManualRows() {
 function WorkoutBuilder() {
   const selectedExercises = useContext(ExercisesContext);
 
-
   const { baseRows, setBaseRows } = useBaseRows(selectedExercises);
   const { manualRows, addRow, setManualRows } = useManualRows();
 
@@ -76,14 +75,13 @@ function WorkoutBuilder() {
     })),
   ];
 
-  console.log(rows);
-
   function handleNumberInput(e) {
     e.preventDefault();
     const inputValue = e.target.value;
     const sanitizedValue = inputValue.replace(/[^0-9]/g, "");
     e.target.value = sanitizedValue;
   }
+
   function handleNameChange(e, rowId) {
     const enteredName = e.target.value;
 
@@ -98,35 +96,23 @@ function WorkoutBuilder() {
   }
 
   function toggleMode(globalIndex) {
-    if (globalIndex < baseRows.length) {
-      // Index is within baseRows, update it
-      setBaseRows((prevBaseRows) => {
-        return prevBaseRows.map((row, index) => {
-          if (index === globalIndex) {
-            return {
-              ...row,
-              isRepsMode: !row.isRepsMode,
-            };
-          }
-          return row;
-        });
-      });
-    } else {
-      // Index is within manualRows, subtract offset
-      const manualIndex = globalIndex - baseRows.length;
+    const isBaseRow = globalIndex < baseRows.length;
 
-      setManualRows((prevManualRows) => {
-        return prevManualRows.map((row, index) => {
-          if (index === manualIndex) {
-            return {
-              ...row,
-              isRepsMode: !row.isRepsMode,
-            };
-          }
-          return row;
-        });
+    const updateRows = isBaseRow ? setBaseRows : setManualRows;
+    const rowsToUpdate = isBaseRow ? baseRows : manualRows;
+    const rowIndex = isBaseRow ? globalIndex : globalIndex - baseRows.length;
+
+    updateRows((prevRows) => {
+      return prevRows.map((row, index) => {
+        if (index === rowIndex) {
+          return {
+            ...row,
+            isRepsMode: !row.isRepsMode,
+          };
+        }
+        return row;
       });
-    }
+    });
   }
 
   return (
@@ -156,11 +142,7 @@ function WorkoutBuilder() {
             <TextField label="Time" type="number" onInput={handleNumberInput} />
           )}
 
-          <Button
-            onClick={() => {
-              toggleMode(row.globalIndex);
-            }}
-          >
+          <Button onClick={() => toggleMode(row.globalIndex)}>
             Toggle Mode
           </Button>
         </Stack>

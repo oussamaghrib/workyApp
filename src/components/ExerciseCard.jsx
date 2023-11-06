@@ -19,9 +19,7 @@ function ExerciseCard(props) {
   const [wasAdded, setWasAdded] = useState(false);
 
   useEffect(() => {
-    const storedWasAdded = JSON.parse(
-      localStorage.getItem(props.exercise.name)
-    );
+    const storedWasAdded = JSON.parse(localStorage.getItem(props.exercise.name));
     if (storedWasAdded) {
       setWasAdded(storedWasAdded);
     }
@@ -34,7 +32,7 @@ function ExerciseCard(props) {
   function handleClick() {
     if (!props.wasAdded) {
       props.onSelect(props.exercise.name);
-      setWasAdded((prev) => !prev);
+      setWasAdded(prevWasAdded => !prevWasAdded);
     }
   }
 
@@ -45,28 +43,28 @@ function ExerciseCard(props) {
         width: "30%",
         minWidth: "400px",
         mb: "2%",
-        position: "relative",
+        position: "relative"
       }}
     >
       <Box
         sx={{
           position: "absolute",
           top: 16,
-          right: 16,
+          right: 16
         }}
       >
         {wasAdded ? (
           <RemoveIcon
             onClick={handleClick}
             sx={{
-              color: "fifth.main",
+              color: "fifth.main"
             }}
           />
         ) : (
           <LibraryAddIcon
             onClick={handleClick}
             sx={{
-              color: "seventh.main",
+              color: "seventh.main"
             }}
           />
         )}
@@ -80,7 +78,7 @@ function ExerciseCard(props) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            width: "90%",
+            width: "90%"
           }}
         >
           <Box>
@@ -90,7 +88,7 @@ function ExerciseCard(props) {
                 m="{1}"
                 sx={{
                   color: "blue",
-                  bgcolor: "forth.main",
+                  bgcolor: "forth.main"
                 }}
               >
                 #{props.exercise.muscle}
@@ -100,7 +98,7 @@ function ExerciseCard(props) {
                 m="{1}"
                 sx={{
                   color: "white",
-                  bgcolor: "seventh.main",
+                  bgcolor: "seventh.main"
                 }}
               >
                 #{props.exercise.type}

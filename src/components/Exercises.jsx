@@ -11,7 +11,7 @@ function Exercises() {
   const [exercises, setExercises] = useState([]);
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState([]);
-  
+
   useEffect(() => {
     const storedSelected = JSON.parse(localStorage.getItem('selectedExercises'));
     if (storedSelected && storedSelected.length > 0) {
@@ -23,29 +23,21 @@ function Exercises() {
     localStorage.setItem('selectedExercises', JSON.stringify(selected));
   }, [selected]);
 
-
-
- 
-  const buttonRef = useRef()
+  const buttonRef = useRef();
 
   function handleSelect(name) {
-    
-    if(!selected.includes(name)) {
+    if (!selected.includes(name)) {
       setSelected(prev => [...prev, name]);
-    } 
-    else {
-      setSelected(prev => prev.filter(n => n !== name))
-      
-
+    } else {
+      setSelected(prev => prev.filter(n => n !== name));
     }
-    
   }
 
-
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        handleLoadMore()     }
+        handleLoadMore();
+      }
     });
 
     observer.observe(buttonRef.current);
@@ -54,34 +46,36 @@ function Exercises() {
   }, [exercises.length]);
 
   async function handleLoadMore() {
-    setOffset((prev) => prev + 10);
-    const exercises = await getExercises(offset);
-
-    setExercises((prev) => [...prev, ...exercises]); // Update exercises state
-
-    return exercises.length;
+    setOffset(prev => prev + 10);
+    const newExercises = await getExercises(offset);
+    setExercises(prev => [...prev, ...newExercises]);
+    return newExercises.length;
   }
 
-
   return (
-    <> 
-    <ExercisesContext.Provider value={{selected, setSelected}}>
-      
-    <WorkoutBuilder></WorkoutBuilder>
-    <SelectedExercises selectedExercises={selected}></SelectedExercises>
-    <Box sx={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around'
-    }}>
-      {exercises.map((exercise, i) => (
-        <ExerciseCard exercise={exercise} key={i} onSelect={handleSelect}    />
-       
-      ))}
-      </Box>
-
-      <button onClick={handleLoadMore} ref={buttonRef}>Load More</button>
-      </ExercisesContext.Provider>  
+    <>
+      <ExercisesContext.Provider value={{ selected, setSelected }}>
+        <WorkoutBuilder />
+        <SelectedExercises selectedExercises={selected} />
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around'
+          }}
+        >
+          {exercises.map((exercise, i) => (
+            <ExerciseCard
+              exercise={exercise}
+              key={i}
+              onSelect={handleSelect}
+            />
+          ))}
+        </Box>
+        <button onClick={handleLoadMore} ref={buttonRef}>
+          Load More
+        </button>
+      </ExercisesContext.Provider>
     </>
   );
 }

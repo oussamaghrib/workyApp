@@ -18,14 +18,17 @@ const style = {
 
 
 
-export default function ExerciseInstructionsModal  (props) {
+export default function ExerciseInstructionsModal(props) {
   const [open, setOpen] = React.useState(false);
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}  sx={{ color: "sixth.main", p:0 }}>instructions</Button>
+      <Button onClick={handleOpen} sx={{ color: "sixth.main", p: 0 }}>
+        instructions
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
