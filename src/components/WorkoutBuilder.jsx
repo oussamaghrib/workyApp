@@ -24,6 +24,25 @@ function useBaseRows(selectedExercises) {
 function useManualRows() {
   const [manualRows, setManualRows] = useState([]);
 
+  useEffect(() => {
+
+    const storedSelected = JSON.parse(localStorage.getItem('selectedExercises'));
+    if (storedSelected && storedSelected.length > 0) {
+      setManualRows(storedSelected);
+    }
+
+    const storedRows = JSON.parse(localStorage.getItem("manualRows"));
+    if (storedRows && storedRows.length>0) {
+      setManualRows(storedRows);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("manualRows", JSON.stringify(manualRows));
+  }, [manualRows]);
+
+
+
   const addRow = () => {
     setManualRows((prev) => {
       return [
@@ -42,6 +61,7 @@ function useManualRows() {
 function WorkoutBuilder() {
   const selectedExercises = useContext(ExercisesContext);
 
+
   const { baseRows, setBaseRows } = useBaseRows(selectedExercises);
   const { manualRows, addRow, setManualRows } = useManualRows();
 
@@ -56,13 +76,26 @@ function WorkoutBuilder() {
     })),
   ];
 
+  console.log(rows);
+
   function handleNumberInput(e) {
     e.preventDefault();
     const inputValue = e.target.value;
-    const sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+    const sanitizedValue = inputValue.replace(/[^0-9]/g, "");
     e.target.value = sanitizedValue;
   }
-  
+  function handleNameChange(e, rowId) {
+    const enteredName = e.target.value;
+
+    setManualRows((prevRows) => {
+      return prevRows.map((row) => {
+        if (row.id === rowId) {
+          return { ...row, name: enteredName };
+        }
+        return row;
+      });
+    });
+  }
 
   function toggleMode(globalIndex) {
     if (globalIndex < baseRows.length) {
@@ -100,7 +133,11 @@ function WorkoutBuilder() {
     <Stack spacing={2}>
       {rows.map((row) => (
         <Stack key={`${row.name}-${row.id}`} direction="row" spacing={2}>
-          <TextField label="Name" value={row.name} />
+          <TextField
+            label="Name"
+            value={row.name}
+            onBlur={(e) => handleNameChange(e, row.id)}
+          />
 
           {row.isRepsMode ? (
             <>
@@ -108,12 +145,15 @@ function WorkoutBuilder() {
                 label="Reps"
                 type="number"
                 onInput={handleNumberInput}
-              
               />
-              <TextField label="Sets" type="number"  onInput={handleNumberInput}/>
+              <TextField
+                label="Sets"
+                type="number"
+                onInput={handleNumberInput}
+              />
             </>
           ) : (
-            <TextField label="Time" type="number" onInput={handleNumberInput}/>
+            <TextField label="Time" type="number" onInput={handleNumberInput} />
           )}
 
           <Button
